@@ -12,7 +12,7 @@
           <div class="column">
             <div class="team team--home">
               <div class="team-logo">
-                <img :src="`/logos/${item.home_club}.svg`" :alt="item.home_club" />
+                <img :src="`/logos/${item.home_club}-m.png`" :alt="item.home_club" />
               </div>
               <h2 class="team-name tw-flex" :class="{'tw-text-green-500': item.winner == item.home_player, 'tw-text-red-400' : item.winner == item.away_player}">
                 {{ item.home_player }}
@@ -29,17 +29,17 @@
                 <span class="match-score-number" :class="{'match-score-number--leading' : item.winner == item.away_player}">{{ item.away_goal }}</span>
               </div>
 							<div class="tw-flex tw-space-x-1 tw-mt-2 tw-bg-red-50 tw-p-2 tw-rounded-lg">
-								<img :src="`/logos/${item.home_banned_1}.svg`" :alt="item.home_banned_1" width="30"/>
-								<img :src="`/logos/${item.away_banned_1}.svg`" :alt="item.away_banned_1" width="30"/>
-								<img :src="`/logos/${item.home_banned_2}.svg`" :alt="item.home_banned_2" width="30"/>
-								<img :src="`/logos/${item.away_banned_2}.svg`" :alt="item.away_banned_2" width="30"/>
+								<img :src="`/logos/${item.home_banned_1}-s.png`" :alt="item.home_banned_1" width="30"/>
+								<img :src="`/logos/${item.away_banned_1}-s.png`" :alt="item.away_banned_1" width="30"/>
+								<img :src="`/logos/${item.home_banned_2}-s.png`" :alt="item.home_banned_2" width="30"/>
+								<img :src="`/logos/${item.away_banned_2}-s.png`" :alt="item.away_banned_2" width="30"/>
 							</div>
             </div>
           </div>
           <div class="column">
             <div class="team team--away">
               <div class="team-logo">
-                <img :src="`/logos/${item.away_club}.svg`" :alt="item.away_club"/>
+                <img :src="`/logos/${item.away_club}-m.png`" :alt="item.away_club"/>
               </div>
               <h2 class="team-name tw-flex" :class="{'tw-text-green-500': item.winner == item.away_player, 'tw-text-red-400' : item.winner == item.home_player}">
                 {{ item.away_player }}

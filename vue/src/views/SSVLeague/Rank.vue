@@ -52,7 +52,7 @@
                 <tbody class="tw-bg-white">
                   <tr v-for="(item, index) in rank" :key="item" class="hover:tw-opacity-70 hover:tw-bg-slate-50 tw-cursor-pointer tw-border" @click="viewHistory(item.player)">
                     <td class="tw-pl-4">
-                      {{ index + 1 }}
+                      <div :class="{'tw-underline tw-text-blue-500 tw-font-bold' : index < 4 }">{{ index + 1 }}</div>
                     </td>
                     <td class="tw-flex tw-px-6 tw-py-2 tw-whitespace-nowrap tw-items-center">
                       <img class="tw-w-10 tw-rounded-md" :src="item.avatar" alt="">
@@ -89,12 +89,12 @@
                       {{ item.point }}
                     </td>
                     <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap">
-                      <div class="tw-flex">
-                        <template v-for="item in item.nearest" :key="item">
-                          <match-draw v-if="item == 1"/>
-                          <match-win v-if="item == 2"/>
-                          <match-lose v-if="item == 3"/>
-                        </template>
+                      <div class="tw-flex tw-space-x-1">
+                        <div v-for="item in item.nearest" :key="item">
+                          <img src="/icons/match-draw.svg" v-if="item == 1"/>
+                          <img src="/icons/match-win.svg" v-if="item == 2"/>
+                          <img src="/icons/match-lose.svg" v-if="item == 3"/>
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -109,10 +109,6 @@
 </template>
 
 <script setup>
-import MatchWin from 'components/icons/MatchWin.vue';
-import MatchDraw from 'components/icons/MatchDraw.vue';
-import MatchLose from 'components/icons/MatchLose.vue';
-
 import { onMounted, ref } from 'vue';
 import ssvLeagueCaller from 'callers/ssv-league.caller';
 import { useRouter } from 'vue-router';

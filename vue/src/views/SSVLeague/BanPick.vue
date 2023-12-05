@@ -7,7 +7,7 @@
           :data-pick="item.picked"
           :class="{'banned' : item.banned, 'tw-opacity-20': state == 6 && !item.picked && !item.banned }" 
           @click="banPick(item.name)">
-          <img :src="`/logos/${item.name}.svg`" :alt="item.alias"/>
+          <img :src="`/logos/${item.name}-l.png`" :alt="item.alias"/>
         </div>
       </div>
     </div>
