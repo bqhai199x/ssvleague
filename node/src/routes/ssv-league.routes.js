@@ -9,5 +9,6 @@ router.get('/match-all', ssvleague.getAllMatch);
 router.patch('/update-match', ssvleague.updateMatch);
 router.get('/rank', ssvleague.getRank);
 router.get('/history/:player', ssvleague.getHistory);
+router.get('/matching', ssvleague.getMatching);
 
 module.exports = router;

@@ -32,5 +32,9 @@ export default {
   getHistory: async (player) => {
     const { data } = await api.get(`/ssvleague/history/${player}`);
     return data;
+  },
+  getMatching: async () => {
+    const { data } = await api.get('/ssvleague/matching');
+    return data;
   }
 }

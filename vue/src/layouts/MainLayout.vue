@@ -18,8 +18,7 @@
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
       <!-- drawer content -->
       <q-list>
-
-        <q-item clickable v-ripple to="/ssv-league/rank">
+        <q-item clickable v-ripple to="/ssv-league/rank" :active="$route.name == 'rank'">
           <q-item-section avatar>
             <q-icon name="sports_soccer" />
           </q-item-section>
@@ -29,7 +28,17 @@
         </q-item>
         <q-separator />
 
-        <q-item clickable v-ripple to="/ssv-league/history/all">
+        <q-item clickable v-ripple to="/ssv-league/matching" :active="$route.name == 'matching'">
+          <q-item-section avatar>
+            <q-icon name="handshake" />
+          </q-item-section>
+          <q-item-section>
+            Matching
+          </q-item-section>
+        </q-item>
+        <q-separator />
+
+        <q-item clickable v-ripple to="/ssv-league/history/all" :active="$route.name == 'history'">
           <q-item-section avatar>
             <q-icon name="history" />
           </q-item-section>

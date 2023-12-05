@@ -80,7 +80,7 @@ const setState = (banPickState) => {
 }
 
 const initSocket = () => {
-  SocketManager.connect();
+  SocketManager.connect(key.value);
   SocketManager.socket.on('banning', (state, player, clubName) => {
     const club = clubs.value.find(x => x.name == clubName);
     club.banned = true;

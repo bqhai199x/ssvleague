@@ -14,8 +14,10 @@
               <div class="team-logo">
                 <img :src="`/logos/${item.home_club}.svg`" :alt="item.home_club" />
               </div>
-              <h2 class="team-name" :class="{'tw-text-green-500': item.winner == item.home_player, 'tw-text-red-400' : item.winner == item.away_player}">
+              <h2 class="team-name tw-flex" :class="{'tw-text-green-500': item.winner == item.home_player, 'tw-text-red-400' : item.winner == item.away_player}">
                 {{ item.home_player }}
+								<img v-if="item.home_yellow_card" src="/icons/yellow-card-right.svg" alt="Red card" class="tw-inline" :title="item.home_yellow_card"/>
+								<img v-if="item.home_red_card" src="/icons/red-card-right.svg" alt="Red card" class="tw-inline" :title="item.home_red_card"/>
               </h2>
             </div>
           </div>
@@ -26,12 +28,12 @@
                 <span class="match-score-divider">:</span>
                 <span class="match-score-number" :class="{'match-score-number--leading' : item.winner == item.away_player}">{{ item.away_goal }}</span>
               </div>
-                <div class="tw-flex tw-space-x-1 tw-mt-5 tw-bg-red-50 tw-p-2 tw-rounded-lg">
-                  <img :src="`/logos/${item.home_banned_1}.svg`" :alt="item.home_banned_1" width="30"/>
-                  <img :src="`/logos/${item.away_banned_1}.svg`" :alt="item.away_banned_1" width="30"/>
-                  <img :src="`/logos/${item.home_banned_2}.svg`" :alt="item.home_banned_2" width="30"/>
-                  <img :src="`/logos/${item.away_banned_2}.svg`" :alt="item.away_banned_2" width="30"/>
-                </div>
+							<div class="tw-flex tw-space-x-1 tw-mt-2 tw-bg-red-50 tw-p-2 tw-rounded-lg">
+								<img :src="`/logos/${item.home_banned_1}.svg`" :alt="item.home_banned_1" width="30"/>
+								<img :src="`/logos/${item.away_banned_1}.svg`" :alt="item.away_banned_1" width="30"/>
+								<img :src="`/logos/${item.home_banned_2}.svg`" :alt="item.home_banned_2" width="30"/>
+								<img :src="`/logos/${item.away_banned_2}.svg`" :alt="item.away_banned_2" width="30"/>
+							</div>
             </div>
           </div>
           <div class="column">
@@ -39,8 +41,10 @@
               <div class="team-logo">
                 <img :src="`/logos/${item.away_club}.svg`" :alt="item.away_club"/>
               </div>
-              <h2 class="team-name" :class="{'tw-text-green-500': item.winner == item.away_player, 'tw-text-red-400' : item.winner == item.home_player}">
+              <h2 class="team-name tw-flex" :class="{'tw-text-green-500': item.winner == item.away_player, 'tw-text-red-400' : item.winner == item.home_player}">
                 {{ item.away_player }}
+								<img v-if="item.away_yellow_card" src="/icons/yellow-card-right.svg" alt="Yellow card" class="tw-inline" :title="item.away_yellow_card"/>
+								<img v-if="item.away_red_card" src="/icons/red-card-right.svg" alt="Red card" class="tw-inline" :title="item.away_red_card"/>
               </h2>
             </div>
           </div>

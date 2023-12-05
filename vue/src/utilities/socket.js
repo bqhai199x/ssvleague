@@ -4,8 +4,8 @@ class SocketManager {
   socket;
   constructor() {}
 
-  connect() {
-    this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT);
+  connect(key) {
+    this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT, { query: 'key='+key });
   }
 
   disconnect() {

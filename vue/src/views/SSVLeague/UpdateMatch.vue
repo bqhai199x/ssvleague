@@ -18,9 +18,12 @@
       <q-select outlined v-model="match.away_club" dense :options="clubs" option-label="alias" options-dense option-value="name" map-options emit-value label="Away club" 
         :option-disable="(opt) => [match.home_banned_1, match.away_banned_1, match.home_banned_2, match.away_banned_2, match.home_club].includes(opt.name)"/>
       <q-select outlined v-model="match.ban_pick_state" dense :options="states" label="State" options-dense map-options emit-value />
+      <q-input type="number" label="Home yellow card" v-model.number="match.home_yellow_card" dense outlined />
+      <q-input type="number" label="Away yellow card" v-model.number="match.away_yellow_card" dense outlined />
+      <q-input type="number" label="Home red card" v-model.number="match.home_red_card" dense outlined />
+      <q-input type="number" label="Away red card" v-model.number="match.away_red_card" dense outlined />
       <q-input type="number" label="Home goal" v-model.number="match.home_goal" dense outlined />
       <q-input type="number" label="Away goal" v-model.number="match.away_goal" dense outlined />
-      <q-select outlined v-model="match.winner" dense :options="matchPlayers" label="Winner" options-dense />
       <q-btn color="secondary" label="Update" @click="updateMatch"/>
     </div>
   </div>
@@ -29,7 +32,7 @@
 <script setup>
 import ssvLeagueCaller from 'callers/ssv-league.caller';
 import toast from 'utilities/toast';
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const match = ref();
 const key = ref();
@@ -45,12 +48,6 @@ const states = [
   { label: 'Matching', value: 6 },
   { label: 'Match end', value: 7 },
 ]
-const matchPlayers = computed(() =>
-  {
-    if(match.value) return [null, match.value.home_player, match.value.away_player];
-    return [];
-  }
-)
 
 onMounted(async() => {
   const data = await ssvLeagueCaller.getPlayers();

@@ -34,6 +34,14 @@
                     Hiệu số
                   </th>
                   <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
+                    Thẻ vàng
+                    <img src="/icons/yellow-card-right.svg" alt="Yellow card" class="tw-inline"/>
+                  </th>
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
+                    Thẻ đỏ
+                    <img src="/icons/red-card-right.svg" alt="Red card" class="tw-inline"/>
+                  </th>
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
                     Điểm
                   </th>
                   <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
@@ -48,7 +56,7 @@
                     </td>
                     <td class="tw-flex tw-px-6 tw-py-2 tw-whitespace-nowrap tw-items-center">
                       <img class="tw-w-10 tw-rounded-md" :src="item.avatar" alt="">
-                      <span class="tw-ml-5 tw-font-medium">{{ item.player }}</span>
+                      <span class="tw-ml-4 tw-font-medium">{{ item.player }}</span>
                     </td>
                     <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-center">
                       {{ item.matched }}
@@ -70,6 +78,12 @@
                     </td>
                     <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-center">
                       {{ item.difference }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-center">
+                      {{ item.yellow_card }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-center">
+                      {{ item.red_card }}
                     </td>
                     <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-center">
                       {{ item.point }}

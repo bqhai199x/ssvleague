@@ -56,4 +56,11 @@ module.exports = {
       code: 200, status: 'success', data: result
     });
   },
+
+  getMatching: async (req, res) => {
+    const result = await ssvLeagueService.getMatching();
+    return res.status(200).json({
+      code: 200, status: 'success', data: result
+    });
+  },
 }

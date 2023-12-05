@@ -88,6 +88,9 @@ module.exports = {
       delete match.home_key;
       delete match.away_key;
       delete match.mode;
+      if (match.home_goal > match.away_goal) match.winner = match.home_player;
+      else if (match.home_goal < match.away_goal) match.winner = match.away_player;
+      else match.winner = null;
       return await knex('match').where({key : match.key}).update(match);
     } catch(e) {
       return null;
@@ -107,6 +110,8 @@ module.exports = {
         data.win = match.filter(x => x.winner == player).length;
         data.draw = match.filter(x => x.winner == null).length;
         data.lose = match.filter(x => x.winner && x.winner != player).length;
+        data.yellow_card = match.reduce((accumulator, currentValue) => accumulator + (currentValue.home_player == player ? currentValue.home_yellow_card : currentValue.away_yellow_card), 0);
+        data.red_card = match.reduce((accumulator, currentValue) => accumulator + (currentValue.home_player == player ? currentValue.home_red_card : currentValue.away_red_card), 0);
         data.goal_win = match.reduce((accumulator, currentValue) => accumulator + (currentValue.home_player == player ? currentValue.home_goal : currentValue.away_goal), 0);
         data.goal_lose = match.reduce((accumulator, currentValue) => accumulator + (currentValue.home_player == player ? currentValue.away_goal : currentValue.home_goal), 0);
         data.difference = data.goal_win - data.goal_lose;
@@ -121,7 +126,7 @@ module.exports = {
         result.push(data);
       }
       result.sort((a, b) => {
-        return b.point - a.point || b.difference - a.difference;
+        return b.point - a.point || b.difference - a.difference || (a.yellow_card + a.red_card * 3) - (b.yellow_card + b.red_card * 3);
       });
       return result;
     } catch(e) {
@@ -129,7 +134,7 @@ module.exports = {
     }
   },
 
-  getHistory: async(player) => {
+  getHistory: async (player) => {
     try {
       if (player == 'all') return await knex('match').where({ban_pick_state: 7}).orderBy('date', 'desc').select();
       else return await knex('match')
@@ -139,6 +144,14 @@ module.exports = {
         ).andWhere({ban_pick_state: 7})
         .orderBy('date', 'desc')
         .select();
+    } catch (e) {
+      return null;
+    }
+  },
+
+  getMatching: async() => {
+    try {
+      return await knex('match').whereNot({ban_pick_state: 7}).orderBy('date', 'desc').select();
     } catch (e) {
       return null;
     }
