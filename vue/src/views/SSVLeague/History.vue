@@ -1,6 +1,6 @@
 <template>
   <q-scroll-area>
-    <div class="tw-m-5 tw-gap-3 tw-grid tw-grid-cols-2">
+    <div class="tw-m-5 tw-gap-3 tw-grid tw-grid-cols-2 match-frame">
       <!-- code here -->
       <div class="match" v-for="item in matches" :key="item">
         <div class="match-header">
@@ -29,10 +29,10 @@
                 <span class="match-score-number" :class="{'match-score-number--leading' : item.winner == item.away_player}">{{ item.away_goal }}</span>
               </div>
 							<div class="tw-flex tw-space-x-1 tw-mt-2 tw-bg-red-50 tw-p-2 tw-rounded-lg">
-								<img :src="`/logos/${item.home_banned_1}-s.png`" :alt="item.home_banned_1" width="30"/>
-								<img :src="`/logos/${item.away_banned_1}-s.png`" :alt="item.away_banned_1" width="30"/>
-								<img :src="`/logos/${item.home_banned_2}-s.png`" :alt="item.home_banned_2" width="30"/>
-								<img :src="`/logos/${item.away_banned_2}-s.png`" :alt="item.away_banned_2" width="30"/>
+								<img :src="`/logos/${item.home_banned_1}-s.png`" :alt="item.home_banned_1" class="match-banned"/>
+								<img :src="`/logos/${item.away_banned_1}-s.png`" :alt="item.away_banned_1" class="match-banned"/>
+								<img :src="`/logos/${item.home_banned_2}-s.png`" :alt="item.home_banned_2" class="match-banned"/>
+								<img :src="`/logos/${item.away_banned_2}-s.png`" :alt="item.away_banned_2" class="match-banned"/>
 							</div>
             </div>
           </div>
@@ -134,14 +134,6 @@ onMounted(async () => {
 	align-items: center;
 }
 
-.match-date, .match-referee {
-	font-size: 14px;
-	color: var(--color-text-secondary);
-	strong {
-		color: var(--color-text-primary);
-	}
-}
-
 .match-score {
 	margin-top: 12px;
 	display: flex;
@@ -166,7 +158,33 @@ onMounted(async () => {
 	margin-right: 10px;
 }
 
-.match-referee {
-	margin-top: 32px;
+.match-banned {
+	width: 30px;
+}
+
+@media (max-width: 819px) {
+	.match-frame {
+		@apply tw-grid-cols-1
+	}
+
+	.team-logo {
+		width: 50px;
+		height: 50px;
+		img {
+			width: 40px;
+		}
+	}
+
+	.match-score-number {
+		font-size: 24px;
+	}
+
+	.team-name {
+		font-size: 12px;
+	}
+
+	.match-banned {
+		width: 20px;
+	}
 }
 </style>
