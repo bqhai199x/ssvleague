@@ -38,6 +38,16 @@
         </q-item>
         <q-separator />
 
+        <q-item clickable v-ripple target="_blank" href="https://docs.google.com/spreadsheets/d/1h89F41m7gNJ1cTgHijwt-4tFgiNJhc7USAmjXQIwB9A/">
+          <q-item-section avatar>
+            <q-icon name="schedule" />
+          </q-item-section>
+          <q-item-section>
+            Schedule
+          </q-item-section>
+        </q-item>
+        <q-separator />
+
         <q-item clickable v-ripple to="/ssv-league/history/all" :active="$route.name == 'history'">
           <q-item-section avatar>
             <q-icon name="history" />
