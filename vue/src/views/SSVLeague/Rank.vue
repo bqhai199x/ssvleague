@@ -1,51 +1,39 @@
 <template>
-  <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-py-10">
+  <div class="container tw-flex tw-flex-col tw-items-center tw-justify-center tw-py-10">
     <!-- Component Start -->
     <h1 class="tw-text-xl tw-text-gray-400 tw-font-medium">SSV League 2023 - 2024</h1>
     <div class="tw-flex tw-flex-col tw-mt-6">
       <div class="-tw-my-2 tw-overflow-x-auto sm:-tw-mx-6 lg:-tw-mx-8">
         <div class="tw-py-2 tw-align-middle tw-inline-block tw-min-w-full sm:tw-px-6 lg:tw-px-8">
           <div class="tw-shadow tw-overflow-hidden sm:tw-rounded-lg">
-            <table class="tw-min-w-full tw-text-sm">
+            <table class="tw-min-w-full tw-text-sm tw-overflow-auto">
               <thead class="tw-bg-gray-800 tw-text-gray-400 tw-text-sm tw-uppercase tw-font-medium">
                 <tr>
-                  <th scope="col" colspan="2" class="tw-px-3 tw-py-3 tw-text-left tw-tracking-wider">
-                    Người chơi
+                  <th scope="col" colspan="2" class="tw-px-3 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Người chơi" data-title-sp="Người chơi">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Đối đầu
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Đối đầu" data-title-sp="ĐĐ">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Thắng
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Thắng" data-title-sp="Thắng">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Hoà
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Hoà" data-title-sp="Hoà">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Thua
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Thua" data-title-sp="Thua">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Bàn thắng
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Bàn thắng" data-title-sp="BT">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Bàn thua
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Bàn thua" data-title-sp="SBT">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Hiệu số
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Hiệu số" data-title-sp="HS">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Thẻ vàng
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Thẻ vàng" data-title-sp="TV">
                     <img src="/icons/yellow-card-right.svg" alt="Yellow card" class="tw-inline"/>
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Thẻ đỏ
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Thẻ đỏ" data-title-sp="TD">
                     <img src="/icons/red-card-right.svg" alt="Red card" class="tw-inline"/>
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    Điểm
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="Điểm" data-title-sp="Điểm">
                   </th>
-                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider">
-                    5 trận gần nhất
+                  <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-tracking-wider" data-title-pc="5 trận gần nhất" data-title-sp="5TGN">
                   </th>	
                 </tr>
               </thead>
@@ -123,5 +111,32 @@ onMounted(async() => {
 const viewHistory = (player) => {
   router.push(`/ssv-league/history/${player}`);
 }
-
 </script>
+
+<style scoped lang="scss">
+th::after {
+  content: attr(data-title-pc);
+}
+@media (max-width: 819px) {
+ .container {
+  display: block;
+  padding: 10px;
+
+  th {
+    &::after {
+      content: attr(data-title-sp);
+    }
+
+    img {
+      display: none;
+    }
+  }
+
+  td {
+    &:last-child div div {
+      width: 14px;
+    }
+  }
+ }
+}
+</style>
