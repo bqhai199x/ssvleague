@@ -1,7 +1,7 @@
 <template>
   <q-card class="tw-mx-10 tw-my-3 tw-p-3">
     <div class="tw-flex tw-align-middle tw-justify-center">
-      <div class="tw-my-10 tw-grid tw-gap-10 club" :class="{'tw-pointer-events-none' : viewMode }">
+      <div class="tw-my-10 tw-grid tw-gap-y-10 tw-gap-x-20 club" :class="{'tw-pointer-events-none' : viewMode }">
         <div v-for="item in clubs" :key="item"
           class="tw-flex tw-justify-center tw-align-middle hover:tw-opacity-50 tw-cursor-pointer" 
           :data-pick="item.picked"
