@@ -114,29 +114,30 @@ const viewHistory = (player) => {
 </script>
 
 <style scoped lang="scss">
-th::after {
+th::before {
   content: attr(data-title-pc);
 }
+
 @media (max-width: 819px) {
  .container {
-  display: block;
-  padding: 10px;
+    display: block;
+    padding: 10px;
 
-  th {
-    &::after {
-      content: attr(data-title-sp);
+    th {
+      &::before {
+        content: attr(data-title-sp);
+      }
+
+      img {
+        display: none;
+      }
     }
 
-    img {
-      display: none;
+    td {
+      &:last-child div div {
+        width: 14px;
+      }
     }
   }
-
-  td {
-    &:last-child div div {
-      width: 14px;
-    }
-  }
- }
 }
 </style>

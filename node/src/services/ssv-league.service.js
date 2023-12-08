@@ -6,6 +6,7 @@ module.exports = {
     try {
       return await knex('player').select();
     } catch (e) {
+      console.log(e);
       return null;
     }
   },
@@ -14,6 +15,7 @@ module.exports = {
     try {
       return await knex('club').select();
     } catch (e) {
+      console.log(e);
       return null;
     }
   },
@@ -31,6 +33,7 @@ module.exports = {
       await knex('match').insert(match);
       return match;
     } catch (e) {
+      console.log(e);
       return null;
     }
   },
@@ -53,6 +56,7 @@ module.exports = {
       }
       return data;
     } catch (e) {
+      console.log(e);
       return null;
     }
   },
@@ -70,6 +74,7 @@ module.exports = {
       await knex('match').where({key}).update(dataUpd);
       return dataUpd.ban_pick_state;
     } catch(e) {
+      console.log(e);
       return null;
     }
   },
@@ -78,6 +83,7 @@ module.exports = {
     try {
       return await knex('match').orderBy('date', 'desc').select();
     } catch (e) {
+      console.log(e);
       return null;
     }
   },
@@ -93,6 +99,7 @@ module.exports = {
       else match.winner = null;
       return await knex('match').where({key : match.key}).update(match);
     } catch(e) {
+      console.log(e);
       return null;
     }
   },
@@ -130,6 +137,7 @@ module.exports = {
       });
       return result;
     } catch(e) {
+      console.log(e);
       return null;
     }
   },
@@ -145,6 +153,7 @@ module.exports = {
         .orderBy('date', 'desc')
         .select();
     } catch (e) {
+      console.log(e);
       return null;
     }
   },
@@ -153,7 +162,80 @@ module.exports = {
     try {
       return await knex('match').whereNot({ban_pick_state: 7}).orderBy('date', 'desc').select();
     } catch (e) {
+      console.log(e);
       return null;
     }
-  }
+  },
+
+  getTopGoalScore: async() => {
+    try {
+      return await knex.fromRaw(
+        '(SELECT player, SUM(goal) AS goal, avatar ' +
+        'FROM (' +
+          'SELECT home_player AS player, SUM(home_goal) AS goal ' +
+          'FROM `match` ' +
+          'GROUP BY home_player ' +
+          'UNION ' +
+          'SELECT away_player AS player, SUM(away_goal) AS goal ' +
+          'FROM `match` ' +
+          'GROUP BY away_player' +
+        ') AS score ' +
+        'INNER JOIN player on player.name = player ' +
+        'GROUP BY player ' +
+        'ORDER BY goal DESC ' +
+        'LIMIT 5) as top_goal')
+      .select();
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
+
+  getTopConceded: async() => {
+    try {
+      return await knex.fromRaw(
+        '(SELECT player, SUM(goal) AS goal, avatar ' +
+        'FROM (' +
+          'SELECT home_player AS player, SUM(away_goal) AS goal ' +
+          'FROM `match` ' +
+          'GROUP BY home_player ' +
+          'UNION ' +
+          'SELECT away_player AS player, SUM(home_goal) AS goal ' +
+          'FROM `match` ' +
+          'GROUP BY away_player' +
+        ') AS score ' +
+        'INNER JOIN player on player.name = player ' +
+        'GROUP BY player ' +
+        'ORDER BY goal DESC ' +
+        'LIMIT 5) as top_conceded')
+      .select();
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
+
+  getBotFairPlay: async() => {
+    try {
+      return await knex.fromRaw(
+        '(SELECT player, avatar, SUM(yellow_card) AS yellow_card, SUM(red_card) AS red_card,  (red_card * 3 + yellow_card) AS fair_play_point ' +
+        'FROM (' +
+          'SELECT home_player AS player, SUM(home_yellow_card) as yellow_card, SUM(home_red_card) as red_card ' +
+          'FROM `match` ' +
+          'GROUP BY home_player ' +
+          'UNION ' +
+          'SELECT away_player AS player, SUM(away_yellow_card) as yellow_card, SUM(away_red_card) as red_card ' +
+          'FROM `match` ' +
+          'GROUP BY away_player' +
+        ') AS score ' +
+        'INNER JOIN player on player.name = player ' +
+        'GROUP BY player ' +
+        'ORDER BY fair_play_point DESC ' +
+        'LIMIT 5) as bot_fair_play')
+      .select();
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
 }

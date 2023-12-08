@@ -36,5 +36,17 @@ export default {
   getMatching: async () => {
     const { data } = await api.get('/ssvleague/matching');
     return data;
-  }
+  },
+  getTopGoalScore: async () => {
+    const { data } = await api.get('/ssvleague/top-goal-score');
+    return data;
+  },
+  getTopConceded: async () => {
+    const { data } = await api.get('/ssvleague/top-conceded');
+    return data;
+  },
+  getBotFairPlay: async () => {
+    const { data } = await api.get('/ssvleague/bot-fair-play');
+    return data;
+  },
 }

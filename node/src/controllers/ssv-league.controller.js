@@ -63,4 +63,25 @@ module.exports = {
       code: 200, status: 'success', data: result
     });
   },
+
+  getTopGoalScore: async (req, res) => {
+    const result = await ssvLeagueService.getTopGoalScore();
+    return res.status(200).json({
+      code: 200, status: 'success', data: result
+    });
+  },
+
+  getTopConceded: async (req, res) => {
+    const result = await ssvLeagueService.getTopConceded();
+    return res.status(200).json({
+      code: 200, status: 'success', data: result
+    });
+  },
+
+  getBotFairPlay: async (req, res) => {
+    const result = await ssvLeagueService.getBotFairPlay();
+    return res.status(200).json({
+      code: 200, status: 'success', data: result
+    });
+  },
 }

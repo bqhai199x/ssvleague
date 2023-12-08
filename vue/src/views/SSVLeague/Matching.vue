@@ -2,7 +2,8 @@
   <q-card class="tw-m-5 tw-p-3 tw-space-y-2 tw-max-w-[500px]">
     <h6 v-if="matches.length == 0">Không có trận nào đang diễn ra</h6>
     <div v-for="item in matches" :key="item">
-      {{ item.home_player }} vs {{ item.away_player }}: 
+      {{ item.home_player }} vs {{ item.away_player }}
+      <br/>
       <a target="_blank" class="tw-text-blue-400" :href="`/ssv-league/ban-pick/${item.key}`"> {{ item.key }}</a>
     </div>
   </q-card>

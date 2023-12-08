@@ -31,6 +31,11 @@ const ssvLeague = {
       name: 'matching',
       path: 'matching',
       component: () => import('views/SSVLeague/Matching.vue'),
+    },
+    {
+      name: 'statistics',
+      path: 'statistics',
+      component: () => import('views/SSVLeague/Statistics.vue'),
     }
   ]
 }
