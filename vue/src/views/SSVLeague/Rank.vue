@@ -118,7 +118,7 @@ th::before {
   content: attr(data-title-pc);
 }
 
-@media (max-width: 819px) {
+@media (max-width: 640px) {
  .container {
     display: block;
     padding: 10px;

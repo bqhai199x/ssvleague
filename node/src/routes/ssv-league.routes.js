@@ -12,6 +12,7 @@ router.get('/history/:player', ssvleague.getHistory);
 router.get('/matching', ssvleague.getMatching);
 router.get('/top-goal-score', ssvleague.getTopGoalScore);
 router.get('/top-conceded', ssvleague.getTopConceded);
-router.get('/bot-fair-play', ssvleague.getBotFairPlay);
+router.get('/top-bad-play', ssvleague.getTopBadPlay);
+router.get('/favorite-club', ssvleague.getFavoriteClub);
 
 module.exports = router;

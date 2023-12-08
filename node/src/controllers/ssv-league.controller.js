@@ -78,8 +78,15 @@ module.exports = {
     });
   },
 
-  getBotFairPlay: async (req, res) => {
-    const result = await ssvLeagueService.getBotFairPlay();
+  getTopBadPlay: async (req, res) => {
+    const result = await ssvLeagueService.getTopBadPlay();
+    return res.status(200).json({
+      code: 200, status: 'success', data: result
+    });
+  },
+
+  getFavoriteClub: async (req, res) => {
+    const result = await ssvLeagueService.getFavoriteClub();
     return res.status(200).json({
       code: 200, status: 'success', data: result
     });

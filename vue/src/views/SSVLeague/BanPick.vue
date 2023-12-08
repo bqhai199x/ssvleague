@@ -153,7 +153,7 @@ onBeforeMount( async() => {
     -o-transform: translate(-50%, -50%);
   }
 
-  @media (max-width: 819px) {
+  @media (max-width: 640px) {
     .club {
       grid-template-columns: 100px 100px;
       grid-template-rows: repeat(12, 100px);

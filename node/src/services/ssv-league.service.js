@@ -169,22 +169,7 @@ module.exports = {
 
   getTopGoalScore: async() => {
     try {
-      return await knex.fromRaw(
-        '(SELECT player, SUM(goal) AS goal, avatar ' +
-        'FROM (' +
-          'SELECT home_player AS player, SUM(home_goal) AS goal ' +
-          'FROM `match` ' +
-          'GROUP BY home_player ' +
-          'UNION ALL ' +
-          'SELECT away_player AS player, SUM(away_goal) AS goal ' +
-          'FROM `match` ' +
-          'GROUP BY away_player' +
-        ') AS score ' +
-        'INNER JOIN player on player.name = player ' +
-        'GROUP BY player ' +
-        'ORDER BY goal DESC ' +
-        'LIMIT 5) as top_goal')
-      .select();
+      return await knex('top_goal').select();
     } catch (e) {
       console.log(e);
       return null;
@@ -193,46 +178,25 @@ module.exports = {
 
   getTopConceded: async() => {
     try {
-      return await knex.fromRaw(
-        '(SELECT player, SUM(goal) AS goal, avatar ' +
-        'FROM (' +
-          'SELECT home_player AS player, SUM(away_goal) AS goal ' +
-          'FROM `match` ' +
-          'GROUP BY home_player ' +
-          'UNION ALL ' +
-          'SELECT away_player AS player, SUM(home_goal) AS goal ' +
-          'FROM `match` ' +
-          'GROUP BY away_player' +
-        ') AS score ' +
-        'INNER JOIN player on player.name = player ' +
-        'GROUP BY player ' +
-        'ORDER BY goal DESC ' +
-        'LIMIT 5) as top_conceded')
-      .select();
+      return await knex('top_defended').select();
     } catch (e) {
       console.log(e);
       return null;
     }
   },
 
-  getBotFairPlay: async() => {
+  getTopBadPlay: async() => {
     try {
-      return await knex.fromRaw(
-        '(SELECT player, avatar, SUM(yellow_card) AS yellow_card, SUM(red_card) AS red_card,  (red_card * 3 + yellow_card) AS fair_play_point ' +
-        'FROM (' +
-          'SELECT home_player AS player, SUM(home_yellow_card) as yellow_card, SUM(home_red_card) as red_card ' +
-          'FROM `match` ' +
-          'GROUP BY home_player ' +
-          'UNION ALL ' +
-          'SELECT away_player AS player, SUM(away_yellow_card) as yellow_card, SUM(away_red_card) as red_card ' +
-          'FROM `match` ' +
-          'GROUP BY away_player' +
-        ') AS card ' +
-        'INNER JOIN player on player.name = player ' +
-        'GROUP BY player ' +
-        'ORDER BY fair_play_point DESC ' +
-        'LIMIT 5) as bot_fair_play')
-      .select();
+      return await knex('top_bad_play').select();
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
+
+  getFavoriteClub: async() => {
+    try {
+      return await knex('favorite_club').select();
     } catch (e) {
       console.log(e);
       return null;

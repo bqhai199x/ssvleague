@@ -45,8 +45,12 @@ export default {
     const { data } = await api.get('/ssvleague/top-conceded');
     return data;
   },
-  getBotFairPlay: async () => {
-    const { data } = await api.get('/ssvleague/bot-fair-play');
+  getTopBadPlay: async () => {
+    const { data } = await api.get('/ssvleague/top-bad-play');
+    return data;
+  },
+  getFavoriteClub: async () => {
+    const { data } = await api.get('/ssvleague/favorite-club');
     return data;
   },
 }

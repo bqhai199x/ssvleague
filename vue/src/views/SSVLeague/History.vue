@@ -162,7 +162,7 @@ onMounted(async () => {
 	width: 30px;
 }
 
-@media (max-width: 819px) {
+@media (max-width: 640px) {
 	.match-frame {
 		@apply tw-grid-cols-1
 	}
