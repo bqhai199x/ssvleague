@@ -175,7 +175,7 @@ module.exports = {
           'SELECT home_player AS player, SUM(home_goal) AS goal ' +
           'FROM `match` ' +
           'GROUP BY home_player ' +
-          'UNION ' +
+          'UNION ALL ' +
           'SELECT away_player AS player, SUM(away_goal) AS goal ' +
           'FROM `match` ' +
           'GROUP BY away_player' +
@@ -199,7 +199,7 @@ module.exports = {
           'SELECT home_player AS player, SUM(away_goal) AS goal ' +
           'FROM `match` ' +
           'GROUP BY home_player ' +
-          'UNION ' +
+          'UNION ALL ' +
           'SELECT away_player AS player, SUM(home_goal) AS goal ' +
           'FROM `match` ' +
           'GROUP BY away_player' +
@@ -223,11 +223,11 @@ module.exports = {
           'SELECT home_player AS player, SUM(home_yellow_card) as yellow_card, SUM(home_red_card) as red_card ' +
           'FROM `match` ' +
           'GROUP BY home_player ' +
-          'UNION ' +
+          'UNION ALL ' +
           'SELECT away_player AS player, SUM(away_yellow_card) as yellow_card, SUM(away_red_card) as red_card ' +
           'FROM `match` ' +
           'GROUP BY away_player' +
-        ') AS score ' +
+        ') AS card ' +
         'INNER JOIN player on player.name = player ' +
         'GROUP BY player ' +
         'ORDER BY fair_play_point DESC ' +
