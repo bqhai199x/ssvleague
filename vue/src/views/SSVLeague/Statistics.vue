@@ -145,10 +145,10 @@
                 Tấn công như vũ bão
               </th>
               <th scope="col" class="tw-py-3 tw-text-right tw-tracking-wider">
-                Ghi bàn
+                Số trận
               </th>
               <th scope="col" class="tw-py-3 tw-text-right tw-tracking-wider">
-                Số trận
+                Ghi bàn
               </th>
             </tr>
           </thead>
