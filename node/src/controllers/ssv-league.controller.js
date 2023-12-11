@@ -91,4 +91,16 @@ module.exports = {
       code: 200, status: 'success', data: result
     });
   },
+  getTopAttackClub: async (req, res) => {
+    const result = await ssvLeagueService.getTopAttackClub();
+    return res.status(200).json({
+      code: 200, status: 'success', data: result
+    });
+  },
+  getTopConcededClub: async (req, res) => {
+    const result = await ssvLeagueService.getTopConcededClub();
+    return res.status(200).json({
+      code: 200, status: 'success', data: result
+    });
+  },
 }

@@ -53,4 +53,12 @@ export default {
     const { data } = await api.get('/ssvleague/favorite-club');
     return data;
   },
+  getTopAttackClub: async () => {
+    const { data } = await api.get('/ssvleague/top-attack-club');
+    return data;
+  },
+  getTopConcededClub: async () => {
+    const { data } = await api.get('/ssvleague/top-conceded-club');
+    return data;
+  },
 }

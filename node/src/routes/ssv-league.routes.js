@@ -14,5 +14,7 @@ router.get('/top-goal-score', ssvleague.getTopGoalScore);
 router.get('/top-conceded', ssvleague.getTopConceded);
 router.get('/top-bad-play', ssvleague.getTopBadPlay);
 router.get('/favorite-club', ssvleague.getFavoriteClub);
+router.get('/top-attack-club', ssvleague.getTopAttackClub);
+router.get('/top-conceded-club', ssvleague.getTopConcededClub);
 
 module.exports = router;

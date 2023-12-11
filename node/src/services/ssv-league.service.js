@@ -202,4 +202,22 @@ module.exports = {
       return null;
     }
   },
+
+  getTopAttackClub: async() => {
+    try {
+      return await knex('top_attack_club').select();
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
+
+  getTopConcededClub: async() => {
+    try {
+      return await knex('top_conceded_club').select();
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
 }
