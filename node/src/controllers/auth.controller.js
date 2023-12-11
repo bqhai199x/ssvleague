@@ -45,13 +45,14 @@ module.exports = {
       console.error(e);
       return res.status(500).json({
         status: 'error',
-        message: 'Có lỗi trong quá trình đăng nhập, vui lòng thử lại.'
+        message: 'Đăng nhập thất bại!'
       });
     }
   },
 
   getMe: async (req, res) => {
     try {
+      if (!req.cookies.Author_Token) return res.send(401);
       const token = await authService.getMe(req.cookies.Author_Token);
       return res.status(200).json({
         status: 'success',
@@ -61,7 +62,7 @@ module.exports = {
       console.error(e);
       return res.status(401).json({
         status: 'error',
-        message: 'Có lỗi trong quá trình đăng nhập, vui lòng thử lại.'
+        message: 'Xác thực thất bại!'
       });
     }
   },

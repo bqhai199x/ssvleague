@@ -1,5 +1,4 @@
 const authMethod = require('../methods/auth.method');
-const Unauthorized = require('../models/custom-exception.model');
 const { ROLES } = require('../helper/constant')
 
 module.exports = {

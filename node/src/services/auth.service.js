@@ -1,7 +1,6 @@
 const knex = require('../configs/knex')
 const bcrypt = require('bcrypt');
 const authMethod = require('../methods/auth.method');
-const Unauthorized = require('../models/custom-exception.model');
 
 const auth = {
   createUser: async (username, password) => {
@@ -20,9 +19,9 @@ const auth = {
 
   login: async (username, password) => {
     const [ user ] = await auth.getUser(username);
-    if (!user) throw new Unauthorized('Tài khoản không tồn tại!');
+    if (!user) throw new Error('Tài khoản không tồn tại!');
     const isPasswordValid = bcrypt.compareSync(password, user.password);
-    if (!isPasswordValid) throw new Unauthorized('Mật khẩu không chính xác');
+    if (!isPasswordValid) throw new Error('Mật khẩu không chính xác');
     const dataToAccessToken = {
       username: user.username,
       role: user.role

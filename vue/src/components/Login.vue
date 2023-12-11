@@ -1,8 +1,8 @@
 <template>
   <div class="tw-space-y-4">
     <div class="tw-space-y-2">
-      <q-input label="Username" dense v-model="username"></q-input>
-      <q-input type="password" label="Password" dense v-model="password"></q-input>
+      <q-input label="Username" dense v-model="username" @keyup.enter="login"></q-input>
+      <q-input type="password" label="Password" dense v-model="password" @keyup.enter="login"></q-input>
     </div>
     <div class="tw-text-right">
       <q-btn label="Login" @click="login"></q-btn>

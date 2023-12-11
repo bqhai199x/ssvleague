@@ -77,7 +77,7 @@ const columns = [
 ]
 
 const pagination = {
-  rowsPerPage: 15
+  rowsPerPage: 10
 }
 
 const clickRow = (evt, row) => {

@@ -4,7 +4,6 @@ const routes = require('./routes');
 const cors = require('cors');
 const cookieParser = require('cookie-parser')
 const http = require('http').createServer(app);
-const exceptionHandler = require('./middlewares/exception-handler.middleware');
 const initSocket = require('./services/socket.service');
 require('dotenv').config();
 
@@ -15,8 +14,6 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-
-app.use(exceptionHandler);
 
 for (const [key, value] of Object.entries(routes)) {
   app.use(`/api/${key}`, value);
