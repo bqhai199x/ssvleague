@@ -2,15 +2,16 @@ import Axios from 'axios';
 import toastUtil from 'utilities/toast';
 import { useLoadingStore } from 'stores/loading-store';
 
-class RestClient {
-  constructor() {
+export default class RestClient {
+  constructor(servicePath) {
+    this.servicePath = servicePath;
     this.client = this.createAxiosClient();
   }
 
   createAxiosClient() {
     const axiosInstance = Axios.create({
       // set server url by environment variable
-      baseURL: `${import.meta.env.VITE_API_URL}`,
+      baseURL: this.servicePath ? `${import.meta.env.VITE_API_URL}/${this.servicePath}` : import.meta.env.VITE_API_URL,
       headers: {
         'Content-type': 'application/json',
       },
@@ -33,7 +34,7 @@ class RestClient {
   #processThen(response, reject, resolve) {
     const result = response.data;
     // reject if status code abnormal
-    if (result.code !== 0 && result.code !== 200) {
+    if (response.message && response.status !== 'success') {
       toastUtil.error(result.message);
       reject(result);
     }
@@ -80,8 +81,9 @@ class RestClient {
           this.#processThen(response, reject, resolve);
         })
         .catch((error) => {
+          if(this.servicePath == 'auth' && url == 'me') resolve({});
           // process when error
-          this.#processError(error, reject);
+          else this.#processError(error, reject);
         })
         .finally(() => {
           // hide if not multi loading
@@ -112,5 +114,3 @@ class RestClient {
     return this.request('DELETE', url);
   }
 }
-
-export default new RestClient();

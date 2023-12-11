@@ -8,3 +8,10 @@ export const states = [
   { label: 'Matching', value: 6 },
   { label: 'Match end', value: 7 },
 ]
+
+
+export const ROLES = {
+  NORMAL : 0,
+  PES: 1,
+  ADMIN: 99
+}

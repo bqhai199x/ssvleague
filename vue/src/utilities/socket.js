@@ -4,8 +4,12 @@ class SocketManager {
   socket;
   constructor() {}
 
-  connect(key) {
-    this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT, { query: 'key='+key });
+  connect() {
+    this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT);
+  }
+
+  joinChanel(chanel) {
+    this.socket.emit('joinChanel', chanel);
   }
 
   disconnect() {

@@ -1,5 +1,5 @@
 const knex = require('../configs/knex');
-const randtoken = require('rand-token');
+const randToken = require('rand-token');
 
 module.exports = {
   getPlayers: async () => {
@@ -20,12 +20,12 @@ module.exports = {
     }
   },
 
-  creatMatch: async (home_player, away_player) => {
+  createMatch: async (home_player, away_player) => {
     try {
       const match = {
-        key: randtoken.generate(45),
-        home_key: randtoken.generate(45),
-        away_key: randtoken.generate(45),
+        key: randToken.generate(45),
+        home_key: randToken.generate(45),
+        away_key: randToken.generate(45),
         home_player,
         away_player,
         date: new Date(Date.now()),
@@ -40,7 +40,14 @@ module.exports = {
 
   getMatchByKey: async (key) => {
     try {
-      const [data] = await knex('match').where({ key }).andWhereNot({ban_pick_state : -1}).select();
+      const [data] = await knex('match')
+      .where((builder) =>
+        builder.where({ key: key})
+          .orWhere({ home_key: key })
+          .orWhere({ away_key: key })
+      )
+      .andWhereNot({ban_pick_state : -1})
+      .select();
       if(data) {
         switch (key) {
           case data.home_key:

@@ -16,11 +16,19 @@ const ssvLeague = {
       name: 'create-match',
       path: 'create-match',
       component: () => import('views/SSVLeague/CreateMatch.vue'),
+      meta: {
+        requiredAuth: true,
+        roles: [1, 99]
+      }
     },
     {
       name: 'update-match',
       path: 'update-match',
       component: () => import('views/SSVLeague/UpdateMatch.vue'),
+      meta: {
+        requiredAuth: true,
+        roles: [1, 99]
+      }
     },
     {
       name: 'history',
@@ -41,6 +49,10 @@ const ssvLeague = {
       name: 'match-management',
       path: 'match-management',
       component: () => import('views/SSVLeague/MatchManagement.vue'),
+      meta: {
+        requiredAuth: true,
+        roles: [1, 99]
+      }
     }
   ]
 }

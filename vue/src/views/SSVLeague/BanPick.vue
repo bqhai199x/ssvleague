@@ -80,7 +80,8 @@ const setState = (banPickState) => {
 }
 
 const initSocket = () => {
-  SocketManager.connect(key.value);
+  SocketManager.connect();
+  SocketManager.joinChanel(key.value);
   SocketManager.socket.on('banning', (state, player, clubName) => {
     const club = clubs.value.find(x => x.name == clubName);
     club.banned = true;
@@ -96,7 +97,6 @@ const initSocket = () => {
 const banPick = (club) => {
     SocketManager.socket.emit('banpick', key.value, player.value, club);
 }
-
 
 onBeforeMount( async() => {
   SocketManager.disconnect();

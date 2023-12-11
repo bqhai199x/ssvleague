@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="tw-m-5">
+      <q-btn color="secondary" label="Create match" to="/ssv-league/create-match"/>
+    </div>
     <q-table
       class="my-sticky-header-table tw-m-5"
       flat bordered
@@ -63,7 +66,7 @@ const columns = [
     name: 'state',
     label: 'State',
     align: 'left',
-    field: row => states.find(x => x.value == row.ban_pick_state).label
+    field: row => states.find(x => x.value == row.ban_pick_state)?.label
   },
   {
     name: 'date',
@@ -85,7 +88,3 @@ onMounted(async() => {
   matches.value = await ssvLeagueCaller.getAllMatch();
 })
 </script>
-
-<style scoped lang="scss">
-  
-</style>

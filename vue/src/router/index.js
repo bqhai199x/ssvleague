@@ -9,16 +9,21 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const { isLoggedIn } = useAuthStore();
-  if (!to.meta.requiredAuth) {
-    next();
-  } else if (!isLoggedIn) {
-    const verify = await authCaller.getMe();
-    if (verify) {
-      next();
-    } else {
-      next({ name: 'login' });
+  const auth = useAuthStore();
+  if(to.meta.requiredAuth || !from.name) {
+    const user = await authCaller.getMe();
+    if (user) auth.login(user);
+    else {
+      auth.logout();
+      await authCaller.logout();
     }
+  }
+  if(to.meta.requiredAuth) {
+    if (to.meta.roles?.length > 0) {
+      if(to.meta.roles.includes(auth.role)) next();
+      else next({ path: '/404' });
+    } else if(auth.isLoggedIn) next();
+    else next({ path: '/404' });
   } else next();
 });
 

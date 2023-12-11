@@ -9,6 +9,31 @@
         <q-toolbar-title>
           SSV League
         </q-toolbar-title>
+
+        <q-btn-dropdown flat no-caps icon="person" :label="user?.username">
+          <q-list class="tw-w-[150px]">
+            <q-item clickable v-close-popup @click="login" v-if="!isLoggedIn">
+              <q-item-section>
+                <q-item-label>Login</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup @click="register" v-if="!isLoggedIn">
+              <q-item-section>
+                <q-item-label>Register</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup to="/ssv-league/match-management" v-if="isLoggedIn && [1, 99].includes(role)">
+              <q-item-section>
+                <q-item-label>Management</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup @click="logout" v-if="isLoggedIn">
+              <q-item-section>
+                <q-item-label>Logout</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
@@ -76,11 +101,34 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, defineAsyncComponent } from 'vue'
+import dialog from 'utilities/dialog';
+import { useAuthStore } from 'stores/auth-store';
+import { storeToRefs } from 'pinia';
+import authCaller from 'callers/auth-caller'
 
-const leftDrawerOpen = ref(false)
+const LoginModal = defineAsyncComponent(() => import('components/Login.vue'));
+const RegisterModal = defineAsyncComponent(() => import('components/Register.vue'));
+
+const auth = useAuthStore();
+const { user, isLoggedIn, role } = storeToRefs(auth);
+
+const leftDrawerOpen = ref(false);
 
 const toggleLeftDrawer = () => {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
+
+const register = async () => {
+  await dialog.showContent('Register', RegisterModal, { width: '400px' });
+}
+
+const login = async () => {
+  await dialog.showContent('Login', LoginModal, { width: '400px' });
+}
+
+const logout = () => {
+  authCaller.logout();
+  auth.logout();
 }
 </script>
