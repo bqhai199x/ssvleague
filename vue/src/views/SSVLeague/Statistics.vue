@@ -147,6 +147,9 @@
               <th scope="col" class="tw-py-3 tw-text-right tw-tracking-wider">
                 Ghi bàn
               </th>
+              <th scope="col" class="tw-py-3 tw-text-right tw-tracking-wider">
+                Số trận
+              </th>
             </tr>
           </thead>
             <tbody class="tw-bg-white">
@@ -157,6 +160,9 @@
                 <td class="tw-flex tw-py-2 tw-whitespace-nowrap tw-items-center">
                   <img class="tw-w-10 tw-rounded-md" :src="`/logos/${item.club}-s.png`" :alt="item.alias">
                   <span class="tw-ml-4 tw-font-medium">{{ item.alias }}</span>
+                </td>
+                <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-right">
+                  {{ item.match }}
                 </td>
                 <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-right">
                   {{ item.goal }}
@@ -176,6 +182,9 @@
                 Nát như tương bần
               </th>
               <th scope="col" class="tw-py-3 tw-text-right tw-tracking-wider">
+                Số trận
+              </th>
+              <th scope="col" class="tw-py-3 tw-text-right tw-tracking-wider">
                 Thủng lưới
               </th>
             </tr>
@@ -188,6 +197,9 @@
                 <td class="tw-flex tw-py-2 tw-whitespace-nowrap tw-items-center">
                   <img class="tw-w-10 tw-rounded-md" :src="`/logos/${item.club}-s.png`" :alt="item.alias">
                   <span class="tw-ml-4 tw-font-medium">{{ item.alias }}</span>
+                </td>
+                <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-right">
+                  {{ item.match }}
                 </td>
                 <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-right">
                   {{ item.goal }}
