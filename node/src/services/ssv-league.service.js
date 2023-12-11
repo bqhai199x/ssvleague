@@ -81,7 +81,7 @@ module.exports = {
 
   getAllMatch: async () => {
     try {
-      return await knex('match').orderBy('date', 'desc').select();
+      return await knex('match').whereNot({ban_pick_state: -1}).orderBy('date', 'desc').select();
     } catch (e) {
       console.log(e);
       return null;
