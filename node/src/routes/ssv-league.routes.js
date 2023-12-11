@@ -16,5 +16,6 @@ router.get('/top-bad-play', ssvleague.getTopBadPlay);
 router.get('/favorite-club', ssvleague.getFavoriteClub);
 router.get('/top-attack-club', ssvleague.getTopAttackClub);
 router.get('/top-conceded-club', ssvleague.getTopConcededClub);
+router.delete('/delete-match/:key', ssvleague.deleteMatch);
 
 module.exports = router;

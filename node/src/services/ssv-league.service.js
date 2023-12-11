@@ -40,7 +40,7 @@ module.exports = {
 
   getMatchByKey: async (key) => {
     try {
-      const [data] = await knex('match').where({ key }).orWhere({home_key: key}).orWhere({away_key: key}).select();
+      const [data] = await knex('match').where({ key }).andWhereNot({ban_pick_state : -1}).select();
       if(data) {
         switch (key) {
           case data.home_key:
@@ -160,7 +160,7 @@ module.exports = {
 
   getMatching: async() => {
     try {
-      return await knex('match').whereNot({ban_pick_state: 7}).orderBy('date', 'desc').select();
+      return await knex('match').whereNot({ban_pick_state: 7}).andWhereNot({ban_pick_state: -1}).orderBy('date', 'desc').select();
     } catch (e) {
       console.log(e);
       return null;
@@ -215,6 +215,15 @@ module.exports = {
   getTopConcededClub: async() => {
     try {
       return await knex('top_conceded_club').select();
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
+
+  deleteMatch: async(key) => {
+    try {
+      return await knex('match').where({ key }).update({ ban_pick_state: -1 });
     } catch (e) {
       console.log(e);
       return null;

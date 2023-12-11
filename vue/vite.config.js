@@ -22,6 +22,7 @@ export default defineConfig({
       'boot': fileURLToPath(new URL('./src/boot', import.meta.url)),
       'callers': fileURLToPath(new URL('./src/callers', import.meta.url)),
       'utilities': fileURLToPath(new URL('./src/utilities', import.meta.url)),
+      'helper': fileURLToPath(new URL('./src/helper', import.meta.url)),
     }
   }
 })

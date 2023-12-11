@@ -61,4 +61,8 @@ export default {
     const { data } = await api.get('/ssvleague/top-conceded-club');
     return data;
   },
+  deleteMatch: async (key) => {
+    const { data } = await api.delete(`/ssvleague/delete-match/${key}`);
+    return data;
+  },
 }

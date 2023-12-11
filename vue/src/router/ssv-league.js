@@ -36,6 +36,11 @@ const ssvLeague = {
       name: 'statistics',
       path: 'statistics',
       component: () => import('views/SSVLeague/Statistics.vue'),
+    },
+    {
+      name: 'match-manager',
+      path: 'match-manager',
+      component: () => import('views/SSVLeague/MatchManager.vue'),
     }
   ]
 }

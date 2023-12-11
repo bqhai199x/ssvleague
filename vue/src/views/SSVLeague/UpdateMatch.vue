@@ -24,7 +24,10 @@
       <q-input type="number" label="Away red card" v-model.number="match.away_red_card" dense outlined />
       <q-input type="number" label="Home goal" v-model.number="match.home_goal" dense outlined />
       <q-input type="number" label="Away goal" v-model.number="match.away_goal" dense outlined />
-      <q-btn color="secondary" label="Update" @click="updateMatch"/>
+      <div class="tw-space-x-3">
+        <q-btn color="secondary" label="Update" @click="updateMatch"/>
+        <q-btn color="red" label="Delete" @click="deleteMatch"/>
+      </div>
     </div>
   </div>
 </template>
@@ -33,26 +36,23 @@
 import ssvLeagueCaller from 'callers/ssv-league.caller';
 import toast from 'utilities/toast';
 import { onMounted, ref } from 'vue';
+import { states } from 'helper/constant';
+import { useRoute } from 'vue-router';
+import dialog from 'utilities/dialog';
+
+const route = useRoute();
+
+const key = ref(route.query.key);
 
 const match = ref();
-const key = ref();
 const players = ref([]);
 const clubs = ref([]);
-const states = [
-  { label: 'Home banning 1', value: 0 },
-  { label: 'Away banning 1', value: 1 },
-  { label: 'Home banning 2', value: 2 },
-  { label: 'Away banning 2', value: 3 },
-  { label: 'Home picking', value: 4 },
-  { label: 'Away picking', value: 5 },
-  { label: 'Matching', value: 6 },
-  { label: 'Match end', value: 7 },
-]
 
 onMounted(async() => {
   const data = await ssvLeagueCaller.getPlayers();
   players.value = data.map(x => x.name);
   clubs.value = await ssvLeagueCaller.getClubs();
+  await searchMatch();
 })
 
 const searchMatch = async () => {
@@ -63,5 +63,14 @@ const updateMatch = async () => {
   const result = await ssvLeagueCaller.updateMatch(match.value);
   if(result) toast.success('Thành công');
   else toast.error('Thất bại');
+}
+
+const deleteMatch = async () => {
+  const confirm = await dialog.showConfirm('Warning', 'Delete this match?', {width: '500px'});
+  if (confirm != 'OK') return;
+  const result = await ssvLeagueCaller.deleteMatch(match.value.key);
+  if(result) toast.success('Thành công');
+  else toast.error('Thất bại');
+  await searchMatch();
 }
 </script>

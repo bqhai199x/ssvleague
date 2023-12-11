@@ -32,6 +32,9 @@
       "assets/*": [
         "src/assets/*"
       ],
+      "helper/*": [
+        "src/helper/*"
+      ],
       "vue$": [
         "node_modules/vue/dist/vue.runtime.esm-bundler.js"
       ]

@@ -103,4 +103,10 @@ module.exports = {
       code: 200, status: 'success', data: result
     });
   },
+  deleteMatch: async (req, res) => {
+    const result = await ssvLeagueService.deleteMatch(req.params.key);
+    return res.status(200).json({
+      code: 200, status: 'success', data: result
+    });
+  },
 }
