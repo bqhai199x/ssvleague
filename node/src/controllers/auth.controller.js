@@ -32,7 +32,7 @@ module.exports = {
       const username = req.body.username.toLowerCase();
       const password = req.body.password;
       const { user, accessToken }  = await authService.login(username, password);
-      res.cookie('Author_Token', accessToken);
+      res.cookie('Author_Token', accessToken, { maxAge: 24 * 60 * 60 * 1000 });
       return res.status(200).json({
         status: 'success',
         data: {
@@ -52,8 +52,9 @@ module.exports = {
 
   getMe: async (req, res) => {
     try {
-      if (!req.cookies.Author_Token) return res.send(401);
+      if (!req.cookies.Author_Token) return res.sendStatus(401);
       const token = await authService.getMe(req.cookies.Author_Token);
+      res.cookie('Author_Token', token.accessToken, { maxAge: 24 * 60 * 60 * 1000 });
       return res.status(200).json({
         status: 'success',
         data: token.payload

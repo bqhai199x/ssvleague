@@ -31,10 +31,10 @@ const auth = {
   },
 
   getMe: async (token) => {
-    const data = authMethod.verifyToken(token);
-    if (data.payload) {
+    const data = await authMethod.verifyToken(token);
+    if (data) {
       const accessToken = await authMethod.generateToken(data.payload);
-      data.payload.accessToken = accessToken;
+      data.accessToken = accessToken;
     }
     return data;
   }

@@ -31,7 +31,7 @@ export default class RestClient {
     return Promise.reject(error);
   }
 
-  #processThen(response, reject, resolve) {
+  processThen(response, reject, resolve) {
     const result = response.data;
     // reject if status code abnormal
     if (response.message && response.status !== 'success') {
@@ -41,7 +41,7 @@ export default class RestClient {
     resolve(result);
   }
 
-  #processError(error, reject) {
+  processError(error, reject) {
     if (Axios.isAxiosError(error)) {
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -78,12 +78,12 @@ export default class RestClient {
       this.client
         .request(axiosConfig)
         .then((response) => {
-          this.#processThen(response, reject, resolve);
+          this.processThen(response, reject, resolve);
         })
         .catch((error) => {
           if(this.servicePath == 'auth' && url == 'me') resolve({});
           // process when error
-          else this.#processError(error, reject);
+          else this.processError(error, reject);
         })
         .finally(() => {
           // hide if not multi loading
