@@ -122,7 +122,7 @@
                 </td>
                 <td colspan="2" class="tw-flex tw-py-2 tw-whitespace-nowrap tw-items-center">
                   <img class="tw-w-10 tw-rounded-md" :src="`/logos/${item.name}-s.png`" :alt="item.alias">
-                  <span class="tw-ml-4 tw-font-medium">{{ item.alias }}</span>
+                  <span class="tw-ml-4 tw-font-medium ellipsis">{{ item.alias }}</span>
                 </td>
                 <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-right">
                   {{ item.match }}
@@ -159,7 +159,7 @@
                 </td>
                 <td class="tw-flex tw-py-2 tw-whitespace-nowrap tw-items-center">
                   <img class="tw-w-10 tw-rounded-md" :src="`/logos/${item.club}-s.png`" :alt="item.alias">
-                  <span class="tw-ml-4 tw-font-medium">{{ item.alias }}</span>
+                  <span class="tw-ml-4 tw-font-medium ellipsis">{{ item.alias }}</span>
                 </td>
                 <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-right">
                   {{ item.match }}
@@ -196,7 +196,7 @@
                 </td>
                 <td class="tw-flex tw-py-2 tw-whitespace-nowrap tw-items-center">
                   <img class="tw-w-10 tw-rounded-md" :src="`/logos/${item.club}-s.png`" :alt="item.alias">
-                  <span class="tw-ml-4 tw-font-medium">{{ item.alias }}</span>
+                  <span class="tw-ml-4 tw-font-medium ellipsis">{{ item.alias }}</span>
                 </td>
                 <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap tw-text-right">
                   {{ item.match }}
