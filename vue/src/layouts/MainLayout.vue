@@ -22,11 +22,6 @@
                 <q-item-label>Register</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item clickable v-close-popup to="/ssv-league/match-management" v-if="isLoggedIn && [1, 99].includes(role)">
-              <q-item-section>
-                <q-item-label>Management</q-item-label>
-              </q-item-section>
-            </q-item>
             <q-item clickable v-close-popup @click="logout" v-if="isLoggedIn">
               <q-item-section>
                 <q-item-label>Logout</q-item-label>
@@ -86,6 +81,16 @@
           </q-item-section>
           <q-item-section>
             History
+          </q-item-section>
+        </q-item>
+        <q-separator />
+
+        <q-item clickable v-ripple to="/ssv-league/match-management" :active="$route.name == 'match-management'" v-if="isLoggedIn && [1, 99].includes(role)">
+          <q-item-section avatar>
+            <q-icon name="settings" />
+          </q-item-section>
+          <q-item-section>
+            Management
           </q-item-section>
         </q-item>
         <q-separator />
