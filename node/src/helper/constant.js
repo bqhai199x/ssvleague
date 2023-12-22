@@ -1,10 +1,37 @@
-
 const ROLES = {
   NORMAL : 0,
   PES: 1,
   ADMIN: 99
 }
 
+const MATCH_STATE = {
+  HOME_BANNING_1: 0,
+  AWAY_BANNING_1: 1,
+  HOME_BANNING_2: 2,
+  AWAY_BANNING_2: 3,
+  HOME_PICKING: 4,
+  AWAY_PICKING: 5,
+  MATCHING: 6,
+  MATCH_END: 7,
+  MATCH_CANCEL: -1,
+}
+
+const BAN_PICK_VIEW = {
+  VIEWER: 0,
+  HOME: 1,
+  AWAY: 2
+}
+
+const MATCH_HISTORY = {
+  NOT_YET: 0,
+  DRAW: 1,
+  WIN: 2,
+  LOSE: 3
+}
+
 module.exports = {
-  ROLES
+  ROLES,
+  MATCH_STATE,
+  BAN_PICK_VIEW,
+  MATCH_HISTORY
 }

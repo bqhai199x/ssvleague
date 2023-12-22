@@ -13,7 +13,6 @@
             :option-disable="(opt) => [match.home_banned_1, match.away_banned_1, match.away_banned_2, match.home_club, match.away_club].includes(opt.name)"/>
           <q-select outlined v-model="match.home_club" dense :options="clubs" option-label="alias" options-dense option-value="name" map-options emit-value label="Club" 
             :option-disable="(opt) => [match.home_banned_1, match.away_banned_1, match.home_banned_2, match.away_banned_2, match.away_club].includes(opt.name)"/>
-          <q-select outlined v-model="match.ban_pick_state" dense :options="states" label="State" options-dense map-options emit-value />
           <q-input type="number" label="Yellow card" v-model.number="match.home_yellow_card" dense outlined />
           <q-input type="number" label="Red card" v-model.number="match.home_red_card" dense outlined />
           <q-input type="number" label="Goal" v-model.number="match.home_goal" dense outlined />
@@ -27,15 +26,15 @@
             :option-disable="(opt) => [match.home_banned_1, match.away_banned_1, match.home_banned_2, match.home_club, match.away_club].includes(opt.name)"/>
           <q-select outlined v-model="match.away_club" dense :options="clubs" option-label="alias" options-dense option-value="name" map-options emit-value label="Club" 
             :option-disable="(opt) => [match.home_banned_1, match.away_banned_1, match.home_banned_2, match.away_banned_2, match.home_club].includes(opt.name)"/>
-          <q-select outlined v-model="match.ban_pick_state" dense :options="states" label="State" options-dense map-options emit-value />
-          <q-input type="number" label="Yellow card" v-model.number="match.away_yellow_card" dense outlined />
-          <q-input type="number" label="Red card" v-model.number="match.away_red_card" dense outlined />
-          <q-input type="number" label="Goal" v-model.number="match.away_goal" dense outlined />
+            <q-input type="number" label="Yellow card" v-model.number="match.away_yellow_card" dense outlined />
+            <q-input type="number" label="Red card" v-model.number="match.away_red_card" dense outlined />
+            <q-input type="number" label="Goal" v-model.number="match.away_goal" dense outlined />
+          </div>
         </div>
-      </div>
-      <div class="tw-space-x-3">
-        <q-btn color="secondary" label="Update" @click="updateMatch"/>
+        <q-select outlined v-model="match.ban_pick_state" dense :options="states" label="State" options-dense map-options emit-value />
+      <div class="tw-space-x-3 tw-text-right">
         <q-btn color="red" label="Delete" @click="deleteMatch"/>
+        <q-btn color="secondary" label="Update" @click="updateMatch"/>
       </div>
     </div>
   </q-card>

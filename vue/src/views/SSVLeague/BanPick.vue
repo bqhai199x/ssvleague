@@ -5,7 +5,7 @@
         <div v-for="item in clubs" :key="item"
           class="tw-flex tw-justify-center tw-align-middle hover:tw-opacity-50 tw-cursor-pointer" 
           :data-pick="item.picked"
-          :class="{'banned' : item.banned, 'tw-opacity-20': state == 6 && !item.picked && !item.banned }" 
+          :class="{'banned' : item.banned, 'tw-opacity-20': state == MATCH_STATE.MATCHING && !item.picked && !item.banned }" 
           @click="banPick(item.name)">
           <img :src="`/logos/${item.name}-l.png`" :alt="item.alias"/>
         </div>
@@ -23,6 +23,7 @@ import { onMounted, onBeforeMount, ref, computed } from 'vue';
 import SocketManager from 'utilities/socket'
 import { useRouter } from 'vue-router';
 import toast from "utilities/toast";
+import { MATCH_STATE, BAN_PICK_VIEW } from 'helper/constant';
 
 const clubs = ref([]);
 const router = useRouter();
@@ -36,10 +37,10 @@ const pickMode = ref(false);
 const mode = ref(null);
 const state = ref(0);
 const title = computed(() => {
-  if ([0, 2].includes(state.value)) return `${homePlayer.value} banning`;
-  if ([1, 3].includes(state.value)) return `${awayPlayer.value} banning`;
-  if (state.value == 4) return `${homePlayer.value} picking`;
-  if (state.value == 5) return `${awayPlayer.value} picking`;
+  if ([MATCH_STATE.HOME_BANNING_1, MATCH_STATE.HOME_BANNING_2].includes(state.value)) return `${homePlayer.value} banning`;
+  if ([MATCH_STATE.AWAY_BANNING_1, MATCH_STATE.AWAY_BANNING_2].includes(state.value)) return `${awayPlayer.value} banning`;
+  if (state.value == MATCH_STATE.HOME_PICKING) return `${homePlayer.value} picking`;
+  if (state.value == MATCH_STATE.AWAY_PICKING) return `${awayPlayer.value} picking`;
   return '';
 })
 
@@ -48,14 +49,14 @@ onMounted(async() => {
   if(match) {
     mode.value = match.mode;
     if (match.mode) {
-      player.value = match.mode == 1 ? match.home_player : match.away_player;
-      playerKey.value = match.mode == 1 ? match.home_key : match.away_key;
+      player.value = match.mode == BAN_PICK_VIEW.HOME ? match.home_player : match.away_player;
+      playerKey.value = match.mode == BAN_PICK_VIEW.HOME ? match.home_key : match.away_key;
     }
     homePlayer.value = match.home_player;
     awayPlayer.value = match.away_player;
     key.value = match.key;
     setState(match.ban_pick_state);
-    initSocket();
+    if (match.ban_pick_state < MATCH_STATE.MATCHING) initSocket();
     clubs.value = await ssvLeagueCaller.getClubs();
     if (match.home_banned_1 || match.away_banned_1 || match.home_banned_2 || match.away_banned_2) {
       const club = clubs.value.filter(x => [match.home_banned_1, match.away_banned_1, match.home_banned_2, match.away_banned_2].includes(x.name));
@@ -75,27 +76,38 @@ onMounted(async() => {
 const setState = (banPickState) => {
   state.value = banPickState;
   viewMode.value = true;
-  if (mode.value == 1 && [0, 2, 4].includes(banPickState) || mode.value == 2 && [1, 3, 5].includes(banPickState)) viewMode.value = false;
-  if ((mode.value == 1 && banPickState == 4) || (mode.value == 2 && banPickState == 5)) pickMode.value = true;
+  if (mode.value == BAN_PICK_VIEW.HOME && [MATCH_STATE.HOME_BANNING_1, MATCH_STATE.HOME_BANNING_2, MATCH_STATE.HOME_PICKING].includes(banPickState)
+    || mode.value == BAN_PICK_VIEW.AWAY && [MATCH_STATE.AWAY_BANNING_1, MATCH_STATE.AWAY_BANNING_2, MATCH_STATE.AWAY_PICKING].includes(banPickState))
+  {
+      viewMode.value = false;
+  }
+  if ((mode.value == BAN_PICK_VIEW.HOME && banPickState == MATCH_STATE.HOME_PICKING)
+    || (mode.value == BAN_PICK_VIEW.AWAY && banPickState == MATCH_STATE.AWAY_PICKING))
+  {
+    pickMode.value = true;
+  }
 }
 
 const initSocket = () => {
   SocketManager.connect();
   SocketManager.joinChanel(key.value);
-  SocketManager.socket.on('banning', (state, player, clubName) => {
-    const club = clubs.value.find(x => x.name == clubName);
-    club.banned = true;
-    setState(state);
-  });
-  SocketManager.socket.on('picking', (state, player, clubName) => {
-    const club = clubs.value.find(x => x.name == clubName);
-    club.picked = player;
-    setState(state);
-  });
+  SocketManager.onReceive(banning, picking);
+}
+
+const banning = (state, clubName) => {
+  const club = clubs.value.find(x => x.name == clubName);
+  club.banned = true;
+  setState(state);
+}
+
+const picking = (state, player, clubName) => {
+  const club = clubs.value.find(x => x.name == clubName);
+  club.picked = player;
+  setState(state);
 }
 
 const banPick = (club) => {
-    SocketManager.socket.emit('banpick', key.value, player.value, club);
+  SocketManager.sendMessage('banPick', key.value, player.value, club);
 }
 
 onBeforeMount( async() => {

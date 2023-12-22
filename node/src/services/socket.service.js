@@ -6,20 +6,30 @@ const initSocket = (http) => {
       origins: ['http://localhost:5173', 'http://192.168.12.39:5173']
   }});
 
-  io.on('connection', (socket) => {
-    socket.on('joinChanel', (chanel) => {
-      socket.join(chanel);
-    });
-    
-    socket.on('banpick', async (key, player, club) => {
-      const state = await ssvLeagueService.updateBanPickState(key, club);
-      if (state <= 4) io.to(key).emit('banning', state, player, club);
-      else io.to(key).emit('picking', state, player, club);
-    });
+  const client = emitToClient(io);
+  const server = receiveOnServer(client);
 
-    socket.on('disconnect', () => {
-    });
+  io.on('connection', (socket) => {
+    socket.onAny((name, ...args) => {
+      if (name == 'joinChanel') socket.join(args);
+      else if (server[name]) server[name](...args);
+    })
   });
 }
+
+const emitToClient = (io) => {
+  const broadcastToAll = (...param) => io.emit(...param);
+  const broadcastToChanel = (chanel, ...param) => io.to(chanel).emit(...param);
+  return { broadcastToAll, broadcastToChanel };
+};
+
+const receiveOnServer = (client) => {
+  const banPick = async (key, player, club) => {
+    const state = await ssvLeagueService.updateBanPickState(key, club);
+    if (state <= 4) client.broadcastToChanel(key, 'banning', state, club);
+    else client.broadcastToChanel(key, 'picking', state, player, club);
+  }
+  return { banPick };
+};
 
 module.exports = initSocket;

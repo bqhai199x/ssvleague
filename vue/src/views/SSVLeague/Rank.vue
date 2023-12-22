@@ -79,9 +79,9 @@
                     <td class="tw-px-6 tw-py-4 tw-whitespace-nowrap">
                       <div class="tw-flex tw-space-x-1">
                         <div v-for="item in item.nearest" :key="item">
-                          <img src="/icons/match-draw.svg" v-if="item == 1"/>
-                          <img src="/icons/match-win.svg" v-if="item == 2"/>
-                          <img src="/icons/match-lose.svg" v-if="item == 3"/>
+                          <img src="/icons/match-draw.svg" alt="draw" v-if="item == MATCH_HISTORY.DRAW"/>
+                          <img src="/icons/match-win.svg" alt="win" v-if="item == MATCH_HISTORY.WIN"/>
+                          <img src="/icons/match-lose.svg" alt="lose" v-if="item == MATCH_HISTORY.LOSE"/>
                         </div>
                       </div>
                     </td>
@@ -100,6 +100,7 @@
 import { onMounted, ref } from 'vue';
 import ssvLeagueCaller from 'callers/ssv-league.caller';
 import { useRouter } from 'vue-router';
+import { MATCH_HISTORY } from 'helper/constant';
 
 const rank = ref([]);
 const router = useRouter();

@@ -35,7 +35,6 @@ const columns = [
     align: 'left',
     field: row => row.home_player,
     sortable: true,
-    headerStyle: 's'
   },
   {
     name: 'away_player',

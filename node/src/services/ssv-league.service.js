@@ -1,5 +1,6 @@
 const knex = require('../configs/knex');
 const randToken = require('rand-token');
+const { MATCH_STATE, BAN_PICK_VIEW, MATCH_HISTORY } = require('../helper/constant');
 
 module.exports = {
   getPlayers: async () => {
@@ -41,25 +42,17 @@ module.exports = {
   getMatchByKey: async (key) => {
     try {
       const [data] = await knex('match')
-      .where((builder) =>
-        builder.where({ key: key})
+        .where((builder) => {
+          builder.where({ key: key})
           .orWhere({ home_key: key })
           .orWhere({ away_key: key })
-      )
-      .andWhereNot({ban_pick_state : -1})
-      .select();
-      if(data) {
-        switch (key) {
-          case data.home_key:
-            data.mode = 1;
-            break;
-          case data.away_key:
-            data.mode = 2;
-            break;
-          default:
-            data.mode = 0;
-            break;
-        }
+        })
+        .andWhereNot({ban_pick_state : MATCH_STATE.MATCH_CANCEL})
+        .select();
+      if (data) {
+        if (key == data.home_key) data.mode = BAN_PICK_VIEW.HOME;
+        else if (key == data.away_key) data.mode = BAN_PICK_VIEW.AWAY;
+        else data.mode = BAN_PICK_VIEW.VIEWER;
       }
       return data;
     } catch (e) {
@@ -72,12 +65,12 @@ module.exports = {
     try {
       const [ { ban_pick_state } ] = await knex('match').where({key}).select('ban_pick_state');
       const dataUpd = { ban_pick_state: ban_pick_state + 1 };
-      if (ban_pick_state == 0) dataUpd.home_banned_1 = club;
-      else if (ban_pick_state == 1) dataUpd.away_banned_1 = club;
-      else if (ban_pick_state == 2) dataUpd.home_banned_2 = club;
-      else if (ban_pick_state == 3) dataUpd.away_banned_2 = club;
-      else if (ban_pick_state == 4) dataUpd.home_club = club;
-      else if (ban_pick_state == 5) dataUpd.away_club = club;
+      if (ban_pick_state == MATCH_STATE.HOME_BANNING_1) dataUpd.home_banned_1 = club;
+      else if (ban_pick_state == MATCH_STATE.AWAY_BANNING_1) dataUpd.away_banned_1 = club;
+      else if (ban_pick_state == MATCH_STATE.HOME_BANNING_2) dataUpd.home_banned_2 = club;
+      else if (ban_pick_state == MATCH_STATE.AWAY_BANNING_2) dataUpd.away_banned_2 = club;
+      else if (ban_pick_state == MATCH_STATE.HOME_PICKING) dataUpd.home_club = club;
+      else if (ban_pick_state == MATCH_STATE.AWAY_PICKING) dataUpd.away_club = club;
       await knex('match').where({key}).update(dataUpd);
       return dataUpd.ban_pick_state;
     } catch(e) {
@@ -88,7 +81,7 @@ module.exports = {
 
   getAllMatch: async () => {
     try {
-      return await knex('match').whereNot({ban_pick_state: -1}).orderBy('date', 'desc').select();
+      return await knex('match').whereNot({ban_pick_state: MATCH_STATE.MATCH_CANCEL}).orderBy('date', 'desc').select();
     } catch (e) {
       console.log(e);
       return null;
@@ -132,10 +125,10 @@ module.exports = {
         data.point = data.win * 3 + data.draw;
         data.nearest = [];
         for (let index = 0; index < 5; index++) {
-          if(!match[index]) data.nearest.push(0); //Chưa diễn ra
-          else if(match[index].winner == null) data.nearest.push(1); //Hoà
-          else if(match[index].winner == player) data.nearest.push(2); //Thắng
-          else data.nearest.push(3); //Thua
+          if(!match[index]) data.nearest.push(MATCH_HISTORY.NOT_YET);
+          else if(match[index].winner == null) data.nearest.push(MATCH_HISTORY.DRAW);
+          else if(match[index].winner == player) data.nearest.push(MATCH_HISTORY.WIN);
+          else data.nearest.push(MATCH_HISTORY.LOSE);
         }
         result.push(data);
       }
@@ -156,7 +149,7 @@ module.exports = {
         .where((builder) =>
         builder.where({ home_player: player})
           .orWhere({away_player: player })
-        ).andWhere({ban_pick_state: 7})
+        ).andWhere({ban_pick_state: MATCH_STATE.MATCH_END})
         .orderBy('date', 'desc')
         .select();
     } catch (e) {
@@ -167,7 +160,7 @@ module.exports = {
 
   getMatching: async() => {
     try {
-      return await knex('match').whereNot({ban_pick_state: 7}).andWhereNot({ban_pick_state: -1}).orderBy('date', 'desc').select();
+      return await knex('match').whereNot({ban_pick_state: MATCH_STATE.MATCH_END}).andWhereNot({ban_pick_state: MATCH_STATE.MATCH_CANCEL}).orderBy('date', 'desc').select();
     } catch (e) {
       console.log(e);
       return null;
@@ -230,7 +223,7 @@ module.exports = {
 
   deleteMatch: async(key) => {
     try {
-      return await knex('match').where({ key }).update({ ban_pick_state: -1 });
+      return await knex('match').where({ key }).update({ ban_pick_state: MATCH_STATE.MATCH_CANCEL });
     } catch (e) {
       console.log(e);
       return null;
