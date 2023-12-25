@@ -38,9 +38,10 @@
                 </tr>
               </thead>
                 <tbody class="tw-bg-white">
-                  <tr v-for="(item, index) in rank" :key="item" class="hover:tw-opacity-70 hover:tw-bg-slate-50 tw-cursor-pointer tw-border" @click="viewHistory(item.player)">
+                  <tr v-for="(item, index) in rank" :key="item" class="hover:tw-opacity-70 hover:tw-bg-slate-50 tw-cursor-pointer tw-border"
+                    :class="{ 'tw-bg-green-50' : index < 4, 'tw-bg-red-50' : index >= rank.length - 3 }" @click="viewHistory(item.player)">
                     <td class="tw-pl-4">
-                      <div :class="{'tw-underline tw-text-blue-500 tw-font-bold' : index < 4 }">{{ index + 1 }}</div>
+                      <div>{{ index + 1 }}</div>
                     </td>
                     <td class="tw-flex tw-px-6 tw-py-2 tw-whitespace-nowrap tw-items-center">
                       <img class="tw-w-10 tw-rounded-md" :src="item.avatar" alt="">

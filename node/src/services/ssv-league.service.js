@@ -106,35 +106,10 @@ module.exports = {
 
   getRank: async() => {
     try {
-      const result = [];
-      const players = await knex('player').select();
-      const matches = await knex('match').orderBy('date', 'desc').where({ban_pick_state: 7}).select();
-      for (const { name, avatar } of players) {
-        const player = name;
-        const data = { player, avatar };
-        const match = matches.filter(x => x.home_player == player || x.away_player == player);
-        data.matched = match.length;
-        data.win = match.filter(x => x.winner == player).length;
-        data.draw = match.filter(x => x.winner == null).length;
-        data.lose = match.filter(x => x.winner && x.winner != player).length;
-        data.yellow_card = match.reduce((accumulator, currentValue) => accumulator + (currentValue.home_player == player ? currentValue.home_yellow_card : currentValue.away_yellow_card), 0);
-        data.red_card = match.reduce((accumulator, currentValue) => accumulator + (currentValue.home_player == player ? currentValue.home_red_card : currentValue.away_red_card), 0);
-        data.goal_win = match.reduce((accumulator, currentValue) => accumulator + (currentValue.home_player == player ? currentValue.home_goal : currentValue.away_goal), 0);
-        data.goal_lose = match.reduce((accumulator, currentValue) => accumulator + (currentValue.home_player == player ? currentValue.away_goal : currentValue.home_goal), 0);
-        data.difference = data.goal_win - data.goal_lose;
-        data.point = data.win * 3 + data.draw;
-        data.nearest = [];
-        for (let index = 0; index < 5; index++) {
-          if(!match[index]) data.nearest.push(MATCH_HISTORY.NOT_YET);
-          else if(match[index].winner == null) data.nearest.push(MATCH_HISTORY.DRAW);
-          else if(match[index].winner == player) data.nearest.push(MATCH_HISTORY.WIN);
-          else data.nearest.push(MATCH_HISTORY.LOSE);
-        }
-        result.push(data);
+      const result = await knex('rank').select();
+      for (const item of result) {
+        item.nearest = item.nearest.split(',').map(Number);
       }
-      result.sort((a, b) => {
-        return b.point - a.point || b.difference - a.difference || (a.yellow_card + a.red_card * 3) - (b.yellow_card + b.red_card * 3);
-      });
       return result;
     } catch(e) {
       console.log(e);
