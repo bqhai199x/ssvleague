@@ -53,6 +53,11 @@ const ssvLeague = {
         requiredAuth: true,
         roles: [1, 99]
       }
+    },
+    {
+      name: 'spin-wheel',
+      path: 'spin-wheel',
+      component: () => import('views/SSVLeague/SpinWheel.vue'),
     }
   ]
 }

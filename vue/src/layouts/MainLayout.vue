@@ -85,6 +85,16 @@
         </q-item>
         <q-separator />
 
+        <q-item clickable v-ripple to="/ssv-league/spin-wheel" :active="$route.name == 'spin-wheel'">
+          <q-item-section avatar>
+            <q-icon name="cached" />
+          </q-item-section>
+          <q-item-section>
+            Spin Wheel
+          </q-item-section>
+        </q-item>
+        <q-separator />
+
         <q-item clickable v-ripple to="/ssv-league/match-management" :active="$route.name == 'match-management'" v-if="isLoggedIn && [1, 99].includes(role)">
           <q-item-section avatar>
             <q-icon name="settings" />
