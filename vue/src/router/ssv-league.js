@@ -41,6 +41,11 @@ const ssvLeague = {
       name: 'match-management',
       path: 'match-management',
       component: () => import('views/SSVLeague/MatchManagement.vue'),
+    },
+    {
+      name: 'spin-wheel',
+      path: 'spin-wheel',
+      component: () => import('views/SSVLeague/SpinWheel.vue'),
     }
   ]
 }
