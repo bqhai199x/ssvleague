@@ -8,8 +8,8 @@
           `transform: rotate(${calcRotate(index)}deg)`,
           `background-color: ${getColor(index)}`,
           `z-index: ${100 - index}`,
-          `width: ${2560 / clubs.length}px`,
-          `left: calc(50% - ${2560 / clubs.length / 2}px)`
+          `width: ${media / clubs.length}px`,
+          `left: calc(50% - ${media / clubs.length / 2}px)`
         ]">
           <img :src="`/logos/${item.name}-l.png`" :alt="item.alias"/>
         </div>
@@ -36,10 +36,16 @@ const colors = [
   '#9c27b0',
   '#f44336',
 ];
+const media = window.innerWidth < 640 ? 1120 : 2560;
+const isSpinning = ref(false);
 
 const spin = () => {
+  if (isSpinning.value) return;
+  isSpinning.value = true;
+  const rotate = Math.ceil(Math.random() * (4000 - 2000) + 2000);
   container.value.style.transform = "rotate(" + number.value + "deg)";
-  number.value += Math.ceil(Math.random() * (4000 - 2000) + 2000);
+  number.value += rotate;
+  setTimeout(() => isSpinning.value = false, 5000);
 }
 
 const calcRotate = (index) => {
@@ -91,15 +97,6 @@ onMounted(async () => {
   color: #fff;
 }
 
-.arrow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  z-index: 101;
-}
-
 #spin {
   position: absolute;
   top: 50%;
@@ -132,5 +129,27 @@ onMounted(async () => {
     border-bottom-color: #fff;
     top: -25px;
     left: 22.5px;
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: 350px;
+    height: 350px;
+  }
+
+  #spin {
+    width: 40px;
+    height: 40px;
+    font-size: 6px;
+  }
+
+  #spin::after {
+    border-width: 0 5px 10px;
+    top: -15px;
+    left: 8px;
+  }
+  .container div {
+    padding: 20px 10px 0 10px;
+  }
 }
 </style>
