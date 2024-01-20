@@ -6,7 +6,8 @@
         <span>{{ item.title }}</span>
       </q-card-section>
       <q-card-section class="tw-min-h-[80px]" :class="{ 'tw-mx-3': item.config.isComponent }">
-        <div v-if="item.config.isComponent">
+        <div v-if="item.config.isHtml" v-html="item.content"></div>
+        <div v-else-if="item.config.isComponent">
           <component :is="item.content" v-bind="item.config.params"></component>
         </div>
         <div v-else style="white-space: break-spaces;">{{ item.content }}</div>

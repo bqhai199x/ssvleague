@@ -21,10 +21,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import ssvLeagueCaller from 'callers/ssv-league.caller';
+import dialog from 'utilities/dialog';
 
 const container = ref();
 const btn = ref();
-const number = ref(Math.random() * (4000 - 2000) + 2000);
+const number = ref(Math.ceil(Math.random() * (4000 - 2000) + 2000));
 const clubs = ref([]);
 const colors = [
   '#3f51b5',
@@ -43,9 +44,19 @@ const spin = () => {
   if (isSpinning.value) return;
   isSpinning.value = true;
   const rotate = Math.ceil(Math.random() * (4000 - 2000) + 2000);
-  container.value.style.transform = "rotate(" + number.value + "deg)";
   number.value += rotate;
-  setTimeout(() => isSpinning.value = false, 5000);
+  container.value.style.transform = "rotate(" + number.value + "deg)";
+  setTimeout(() => {
+    isSpinning.value = false;
+    const index = clubs.value.length - Math.round((number.value%360)/(360/clubs.value.length));
+    const result = clubs.value[index == clubs.value.length ? 0 : index];
+    dialog.showContent('',
+    `<div class='tw-space-y-3'>
+      <img src="/logos/${result.name}-s.png" alt="${result.alias}"/>
+      <div class='tw-text-center tw-text-lg'>${result.alias}</div>
+    </div>`,
+    { isHtml: true });
+  }, 5000);
 }
 
 const calcRotate = (index) => {
