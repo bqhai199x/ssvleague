@@ -58,6 +58,11 @@ const ssvLeague = {
       name: 'spin-wheel',
       path: 'spin-wheel',
       component: () => import('views/SSVLeague/SpinWheel.vue'),
+    },
+    {
+      name: 'play-in',
+      path: 'play-in',
+      component: () => import('views/SSVLeague/PlayIn.vue'),
     }
   ]
 }

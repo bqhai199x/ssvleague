@@ -45,6 +45,16 @@
         </q-item>
         <q-separator />
 
+        <q-item clickable v-ripple to="/ssv-league/play-in" :active="$route.name == 'play-in'">
+          <q-item-section avatar>
+            <q-icon name="move_up" />
+          </q-item-section>
+          <q-item-section>
+            Play In
+          </q-item-section>
+        </q-item>
+        <q-separator />
+
         <q-item clickable v-ripple to="/ssv-league/matching" :active="$route.name == 'matching'">
           <q-item-section avatar>
             <q-icon name="handshake" />
