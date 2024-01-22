@@ -18,13 +18,13 @@
             </div>
             <div class="matchup">
               <div class="participants">
-                <div class="participant">
+                <div class="participant winner">
                   <div>TienPV</div>
-                  <div></div>
+                  <div>0 (3)</div>
                 </div>
                 <div class="participant">
                   <div>ThanhBT</div>
-                  <div></div>
+                  <div>0 (2)</div>
                 </div>
               </div>
             </div>
@@ -45,7 +45,7 @@
                   <div></div>
                 </div>
                 <div class="participant">
-                  <div></div>
+                  <div>TienPV</div>
                   <div></div>
                 </div>
               </div>
