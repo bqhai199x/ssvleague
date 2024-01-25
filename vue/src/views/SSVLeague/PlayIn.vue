@@ -64,11 +64,11 @@
               <div class="participants">
                 <div class="participant">
                   <div>TaiNM</div>
-                  <div></div>
+                  <div>0 (2)</div>
                 </div>
-                <div class="participant">
+                <div class="participant winner">
                   <div>TienPV</div>
-                  <div></div>
+                  <div>0 (4)</div>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@
                   <div></div>
                 </div>
                 <div class="participant">
-                  <div></div>
+                  <div>TienPV</div>
                   <div></div>
                 </div>
               </div>
