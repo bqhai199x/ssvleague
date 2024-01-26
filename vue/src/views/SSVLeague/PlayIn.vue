@@ -86,11 +86,11 @@
               <div class="participants">
                 <div class="participant">
                   <div>ChinhHV</div>
-                  <div></div>
+                  <div>1</div>
                 </div>
-                <div class="participant">
+                <div class="participant winner">
                   <div>TienPV</div>
-                  <div></div>
+                  <div>2</div>
                 </div>
               </div>
             </div>
@@ -107,7 +107,7 @@
             <div class="matchup">
               <div class="participants">
                 <div class="participant winner !tw-justify-center">
-                  <div></div>
+                  <div>TienPV</div>
                 </div>
               </div>
             </div>
