@@ -63,6 +63,11 @@ const ssvLeague = {
       name: 'play-in',
       path: 'play-in',
       component: () => import('views/SSVLeague/PlayIn.vue'),
+    },
+    {
+      name: 'play-off',
+      path: 'play-off',
+      component: () => import('views/SSVLeague/PlayOff.vue'),
     }
   ]
 }

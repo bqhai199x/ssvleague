@@ -55,6 +55,16 @@
         </q-item>
         <q-separator />
 
+        <q-item clickable v-ripple to="/ssv-league/play-off" :active="$route.name == 'play-off'">
+          <q-item-section avatar>
+            <q-icon name="emoji_events" />
+          </q-item-section>
+          <q-item-section>
+            Play off
+          </q-item-section>
+        </q-item>
+        <q-separator />
+
         <q-item clickable v-ripple to="/ssv-league/matching" :active="$route.name == 'matching'">
           <q-item-section avatar>
             <q-icon name="handshake" />
