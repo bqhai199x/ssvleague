@@ -95,13 +95,13 @@
           <div class="matchups">
             <div class="matchup">
               <div class="participants">
-                <div class="participant">
-                  <div>HaiBQ</div>
-                  <div></div>
+                <div class="participant winner">
+                  <div>HaiNH</div>
+                  <div>2</div>
                 </div>
                 <div class="participant">
-                  <div>HaiNH</div>
-                  <div></div>
+                  <div>HaiBQ</div>
+                  <div>0</div>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@
             <div class="matchup">
               <div class="participants">
                 <div class="participant winner !tw-justify-center">
-                  <div></div>
+                  <div>HaiNH</div>
                 </div>
               </div>
             </div>
